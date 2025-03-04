@@ -5,13 +5,24 @@ body {
   justify-content: center;
   min-height: 100vh;
   font-family: Inter, sans-serif;
+  flex-direction: column;
 }
 * {
   margin: 0;
   padding: 0;
 }
 
-#canvas01 {
-  width: 36px;
-  height: 36px;
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.section {
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
+.section p {
+  text-align: center;
+  padding-bottom: 10px;
 }

@@ -1,67 +1,303 @@
-console.log("Loaded");
 let riveCanvases = [];
 
-function addButton(id, button) {
+function addButton(id, button, width, height, target) {
   // Create a new canvas element
   const canvas = document.createElement("canvas");
   const canvasId = "canvas" + id;
   canvas.id = canvasId; // Set the ID
 
   // Set width and height
-  canvas.width = 36; // Canvas internal resolution
-  canvas.height = 36;
+  canvas.width = width; // Canvas internal resolution
+  canvas.height = height;
 
   // Set CSS styles to ensure correct display size
-  canvas.style.width = "36px";
-  canvas.style.height = "36px";
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
 
   // Append it to the div with ID "buttons"
-  const buttonsDiv = document.getElementById("buttons");
+  const buttonsDiv = document.getElementById(target);
   if (buttonsDiv) {
     buttonsDiv.appendChild(canvas);
   } else {
-    console.error('Div with id "buttons" not found.');
+    console.error(`Div with id "${target}" not found.`);
   }
 
   const newCanvas = new rive.Rive({
     src: "icons.riv",
     canvas: document.getElementById(canvasId),
     autoplay: true,
-    artboard: button, // Optional. If not supplied the default is selected
+    artboard: button,
     stateMachines: "ButtonState",
     onLoad: () => {
       newCanvas.resizeDrawingSurfaceToCanvas();
-      newCanvas.on(rive.EventType.RiveEvent, onRiveEventReceived, canvasId);
+      // Pass the canvasId to the event handler
+      newCanvas.on(rive.EventType.RiveEvent, (event) =>
+        onRiveEventReceived(event, canvasId)
+      );
     },
   });
+
   riveCanvases.push(newCanvas);
 }
-addButton(1, "cog");
-addButton(2, "search");
-addButton(3, "cog");
+
+const buttons = [
+  {
+    name: "cog",
+    widthMultiplier: 1,
+    heightMultiplier: 1,
+  },
+  {
+    name: "search",
+    widthMultiplier: 1,
+    heightMultiplier: 1,
+  },
+  {
+    name: "favorite",
+    widthMultiplier: 1,
+    heightMultiplier: 1,
+  },
+  {
+    name: "arrowBack",
+    widthMultiplier: 1,
+    heightMultiplier: 1,
+  },
+  {
+    name: "toggle",
+    widthMultiplier: 1.2777,
+    heightMultiplier: 1,
+  },
+];
+
+for (let i = 0; i < buttons.length; i++) {
+  addButton(
+    i + "36px",
+    buttons[i].name,
+    36 * buttons[i].widthMultiplier,
+    36 * buttons[i].heightMultiplier,
+    "buttons"
+  );
+}
+for (let i = 0; i < buttons.length; i++) {
+  addButton(
+    i + "72px",
+    buttons[i].name,
+    72 * buttons[i].widthMultiplier,
+    72 * buttons[i].heightMultiplier,
+    "buttons2"
+  );
+}
+for (let i = 0; i < buttons.length; i++) {
+  addButton(
+    i + "18px",
+    buttons[i].name,
+    18 * buttons[i].widthMultiplier,
+    18 * buttons[i].heightMultiplier,
+    "buttons3"
+  );
+}
+
+// const buttonsMatrix = [
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+//   "cog",
+//   "search",
+//   "favorite",
+//   "arrowBack",
+// ];
+// for (let i = 0; i < buttonsMatrix.length; i++) {
+//   addButton(i + "matrix", buttonsMatrix[i], 36, 36, "buttons4");
+// }
 
 // Redraw surface on window scale
 window.addEventListener(
   "resize",
   () => {
-    r.resizeDrawingSurfaceToCanvas();
+    riveCanvases.forEach((r) => r.resizeDrawingSurfaceToCanvas());
   },
   false
 );
 
-function onRiveEventReceived(riveEvent) {
-  console.log("Rive event");
+function onRiveEventReceived(riveEvent, canvasId) {
+  console.log("Rive event received on canvas:", canvasId);
+
   const eventData = riveEvent.data;
   const eventProperties = eventData.properties;
 
   if (eventData.type === rive.RiveEventType.General) {
-    console.log("Event", eventData);
+    console.log("Event from:", canvasId);
     console.log("Event name:", eventData.name);
-    // console.log("Rating:", eventProperties.rating);
-    // console.log("Message:", eventProperties.message);
   } else if (eventData.type === rive.RiveEventType.OpenUrl) {
+    console.log("OpenUrl event from:", canvasId);
     console.log("Event name:", eventData.name);
-    // Manually handle OpenUrl events
-    // window.location.href = eventData.url;
   }
 }
